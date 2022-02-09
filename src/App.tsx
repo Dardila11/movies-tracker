@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import useMovies from './hooks/useMovies';
 import './App.css';
+import { Movie } from './features/list_movies';
 
-function App() {
+const App: React.FC = () => {
+
+  const { movies, isLoading, error } = useMovies()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="text-center">
+      <h1 className="text-2xl text-white font-semibold">Movies Tracker</h1>
+      <div className='flex flex-wrap justify-center'>
+        {isLoading ? <p className='text-white'>fetching data</p> :
+          error != null ? <p className='text-white'> {error} </p> :
+            movies.map(movie => <Movie movie={movie} />)}
+      </div>
     </div>
   );
 }
